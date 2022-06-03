@@ -1,0 +1,37 @@
+@import '../../constants/Colors.scss';
+
+.AddList {
+    display: flex;
+    align-items: center;
+    background-color: $color-List;
+    cursor: pointer;
+    width: 300px;
+    height: 35px;
+    border-radius: 5px;
+    color: $color-White;
+    transition: all 300ms ease;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $color-List-hover;
+        box-shadow: 5px 5px 5px $color-shadow;
+    }
+}
+
+.Plus {
+    align-items: center;
+    font-weight: bold;
+    // background-color: red;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.TxtArea {
+    text-decoration: none;
+    resize: none;
+    outline: 0px none transparent;
+    border-radius: 5px;
+    border: 2px solid $color-border;
+}
