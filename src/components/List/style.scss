@@ -1,6 +1,6 @@
 @import '../../constants/Colors.scss';
 
-.AddList {
+.FirstList {
     display: flex;
     align-items: center;
     background-color: $color-List;
@@ -9,7 +9,7 @@
     height: 35px;
     border-radius: 5px;
     color: $color-White;
-    transition: all 300ms ease;
+    transition: all 200ms ease-in-out;
 
     &:hover {
         cursor: pointer;
@@ -28,10 +28,41 @@
     font-size: 20px;
 }
 
-.TxtArea {
-    text-decoration: none;
-    resize: none;
-    outline: 0px none transparent;
+.SecondList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: $color-SecondList;
+    width: 300px;
+    padding: 5px;
+    border-radius: 5px;
+    color: $color-White;
+    transition: all 200ms ease-in-out;
+}
+
+.AddButton {
+    padding: 5px 8px;
+    background-color: $color-border;
+    font-size: 18px;
+    border: none;
+    color: $color-White;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.ListInput {
+    width: 100%;
+    height: 35px;
+    outline: 0;
     border-radius: 5px;
     border: 2px solid $color-border;
+
+}
+
+.Close {
+
+    color: $color-black;
+    font-size: 24px;
+    cursor: pointer;
 }

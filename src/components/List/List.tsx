@@ -1,27 +1,40 @@
 import React from 'react';
 import './style.scss';
 interface IList {
-  isFocus: boolean;
+  focus: Boolean;
+  setFocus: Function;
 }
 
-const List = ({ isFocus }: IList) => {
-  if (isFocus) {
+const List = ({ focus, setFocus }: IList) => {
+  const handleClick = () => {
+    setFocus(true);
+  };
+  const handleClose = () => {
+    setFocus(false);
+  };
+
+  if (!focus) {
     return (
-      <div className="AddList">
+      <div tabIndex={0} onFocus={handleClick} className="FirstList">
         <span className="Plus">+</span>
         <span className="ListText">Add List</span>
       </div>
     );
   } else {
     return (
-      <div>
-        <textarea
-          className="TxtArea"
-          spellCheck="false"
-          autoFocus
-          placeholder="Enter list title..."
-        ></textarea>
-        <button></button>
+      <div tabIndex={2} className="SecondList">
+        <input
+          spellCheck={false}
+          className="ListInput"
+          type="text"
+          placeholder="Enter list title.."
+        ></input>
+        <div>
+          <input className="AddButton" type="button" value={'Add list'} />
+          <span onClick={handleClose} tabIndex={3} className="Close">
+            X
+          </span>
+        </div>
       </div>
     );
   }

@@ -5,10 +5,7 @@ interface IAction {
 }
 
 const initialState = {
-  cards: [
-    { title: 'First', list: ['a', 'b'] },
-    { title: 'Second', list: ['c', 'd'] },
-  ],
+  cards: [{ title: 'First', list: ['a', 'b'] }],
 };
 
 export const listReducer = (state: IState = initialState, action: IAction) => {
