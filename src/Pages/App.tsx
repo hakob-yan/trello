@@ -8,13 +8,14 @@ import Card from '../components/Card/Card';
 const App: React.FC = () => {
   // const dispatch = useDispatch();
   const [focus, setFocus] = useState<Boolean>(false);
-  const cards = useSelector((state: IState) => state.cards);
+  const cards = useSelector((state: IState) => state.lists);
   return (
     <div className="App">
       {cards.map((elem, i) => (
-        <List setFocus={setFocus} focus={focus} key={`list-${i}`} />
+        <Card index={i} key={`list-${i}`} title={elem.title} />
       ))}
-      <Card></Card>
+
+      <List feature="Add a List" setFocus={setFocus} focus={focus} />
     </div>
   );
 };

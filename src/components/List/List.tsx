@@ -1,43 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './style.scss';
 interface IList {
   focus: Boolean;
   setFocus: Function;
+  feature: string;
+  index?: number;
 }
 
-const List = ({ focus, setFocus }: IList) => {
-  const handleClick = () => {
+const List = ({ focus, setFocus, feature, index }: IList) => {
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState('');
+  const [cardTitle, setCardTitle] = useState('');
+  const handleOpen = () => {
     setFocus(true);
   };
   const handleClose = () => {
     setFocus(false);
   };
+  const handleInput = () => {
+    if (feature === 'Add a List' && title !== '') {
+      dispatch({ type: 'ADD_LIST', payload: title });
+      setTitle('');
+    } else if (feature === 'Add a card' && cardTitle !== '') {
+      dispatch({ type: 'ADD_CARD', payload: cardTitle, index: index });
+      setCardTitle('');
+    }
+  };
+
+  const handleChange = (e: any) => {
+    if (feature === 'Add a List') {
+      setTitle(e.target.value);
+    } else if (feature === 'Add a card') {
+      setCardTitle(e.target.value);
+    }
+  };
 
   if (!focus) {
     return (
-      <div tabIndex={0} onFocus={handleClick} className="FirstList">
+      <div onClick={handleOpen} className="FirstList">
         <span className="Plus">+</span>
-        <span className="ListText">Add List</span>
-      </div>
-    );
-  } else {
-    return (
-      <div tabIndex={2} className="SecondList">
-        <input
-          spellCheck={false}
-          className="ListInput"
-          type="text"
-          placeholder="Enter list title.."
-        ></input>
-        <div>
-          <input className="AddButton" type="button" value={'Add list'} />
-          <span onClick={handleClose} tabIndex={3} className="Close">
-            X
-          </span>
-        </div>
+        <span className="ListText">{feature}</span>
       </div>
     );
   }
+  return (
+    <div
+      tabIndex={0}
+      onBlur={(e) => {
+        const list = e.relatedTarget?.className;
+        if (list == 'AddButton' || list == 'SecondList' || list == 'ListInput') return false;
+        handleClose();
+      }}
+      className="SecondList"
+    >
+      <input
+        autoFocus
+        value={feature === 'Add a List' ? title : cardTitle}
+        spellCheck={false}
+        className="ListInput"
+        type="text"
+        placeholder="Enter title.."
+        onChange={handleChange}
+      ></input>
+      <div>
+        <input onClick={handleInput} className="AddButton" type="button" value={feature} />
+        <span onBlur={handleClose} onClick={handleClose} tabIndex={3} className="Close">
+          X
+        </span>
+      </div>
+    </div>
+  );
 };
 
 export default List;

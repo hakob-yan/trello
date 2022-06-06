@@ -1,7 +1,7 @@
 interface ICard {
-  title: String;
-  list: String[];
+  title: string;
+  card: string[];
 }
 export interface IState {
-  cards: Array<ICard>;
+  lists: Array<ICard>;
 }

@@ -1,4 +1,7 @@
 .App {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
     padding: 50px;
     width: 100vw;
     height: 100vh;

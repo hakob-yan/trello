@@ -5,7 +5,8 @@
     align-items: center;
     background-color: $color-List;
     cursor: pointer;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     height: 35px;
     border-radius: 5px;
     color: $color-White;
@@ -14,7 +15,7 @@
     &:hover {
         cursor: pointer;
         background-color: $color-List-hover;
-        box-shadow: 5px 5px 5px $color-shadow;
+
     }
 }
 
@@ -33,12 +34,13 @@
     flex-direction: column;
     align-items: flex-start;
     background-color: $color-SecondList;
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     padding: 5px;
     border-radius: 5px;
     color: $color-White;
     transition: all 200ms ease-in-out;
-}
+ }
 
 .AddButton {
     padding: 5px 8px;
