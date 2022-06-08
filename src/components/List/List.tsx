@@ -6,26 +6,35 @@ interface IList {
   setFocus: Function;
   feature: string;
   index?: number;
+  parentId?: string;
 }
 
-const List = ({ focus, setFocus, feature, index }: IList) => {
+const List = ({ focus, setFocus, feature, index, parentId }: IList) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [cardTitle, setCardTitle] = useState('');
+
   const handleOpen = () => {
     setFocus(true);
   };
+
   const handleClose = () => {
     setFocus(false);
   };
+
   const handleInput = () => {
     if (feature === 'Add a List' && title !== '') {
-      dispatch({ type: 'ADD_LIST', payload: title });
+      dispatch({ type: 'ADD_LIST', payload: { name: title } });
       setTitle('');
     } else if (feature === 'Add a card' && cardTitle !== '') {
-      dispatch({ type: 'ADD_CARD', payload: cardTitle, index: index });
+      dispatch({
+        type: 'ADD_CARD',
+        payload: { name: cardTitle, parentId: parentId },
+        index: index,
+      });
       setCardTitle('');
     }
+    setFocus(false);
   };
 
   const handleChange = (e: any) => {
@@ -38,7 +47,7 @@ const List = ({ focus, setFocus, feature, index }: IList) => {
 
   if (!focus) {
     return (
-      <div onClick={handleOpen} className="FirstList">
+      <div onClick={handleOpen} className={feature == 'Add a List' ? 'FirstList' : 'OtherList'}>
         <span className="Plus">+</span>
         <span className="ListText">{feature}</span>
       </div>
@@ -49,7 +58,9 @@ const List = ({ focus, setFocus, feature, index }: IList) => {
       tabIndex={0}
       onBlur={(e) => {
         const list = e.relatedTarget?.className;
-        if (list == 'AddButton' || list == 'SecondList' || list == 'ListInput') return false;
+        if (list === 'AddButton' || list === 'SecondList' || list === 'ListInput') {
+          return false;
+        }
         handleClose();
       }}
       className="SecondList"
@@ -62,12 +73,10 @@ const List = ({ focus, setFocus, feature, index }: IList) => {
         type="text"
         placeholder="Enter title.."
         onChange={handleChange}
-      ></input>
+      />
       <div>
         <input onClick={handleInput} className="AddButton" type="button" value={feature} />
-        <span onBlur={handleClose} onClick={handleClose} tabIndex={3} className="Close">
-          X
-        </span>
+        <span onBlur={handleClose} onClick={handleClose} tabIndex={3} className="Close" />
       </div>
     </div>
   );

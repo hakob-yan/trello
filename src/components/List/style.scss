@@ -19,6 +19,25 @@
     }
 }
 
+.OtherList {
+    display: flex;
+    align-items: center;
+    background-color: $color-List;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+    height: 35px;
+    border-radius: 5px;
+    color: $color-black;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $color-List-hover;
+
+    }
+}
+
 .Plus {
     align-items: center;
     font-weight: bold;
@@ -40,7 +59,7 @@
     border-radius: 5px;
     color: $color-White;
     transition: all 200ms ease-in-out;
- }
+}
 
 .AddButton {
     padding: 5px 8px;
@@ -52,6 +71,8 @@
     cursor: pointer;
     margin-right: 20px;
 }
+
+
 
 .ListInput {
     width: 100%;
