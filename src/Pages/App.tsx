@@ -2,34 +2,32 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import './styles.scss';
 import List from '../components/List/List';
-import { useSelector } from 'react-redux';
-// import { IState } from '../interface';
 import Card from '../components/Card/Card';
+import { useSelector } from 'react-redux';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { onDragEnd } from '../utils/function';
-import { IData } from '../interface';
 
-const selectData = (state: IData) => state;
+import { IState } from '../interface';
 
 const App: React.FC = () => {
-  const dipatch = useDispatch();
+  const dispatch = useDispatch();
 
-  const columns = useSelector(selectData);
+  const lists = useSelector((state: IState) => state.lists);
   const [focus, setFocus] = useState<boolean>(false);
 
   return (
     <div className="App">
-      <DragDropContext onDragEnd={(result) => onDragEnd(result, columns, dipatch)}>
-        {Object.entries(columns).map(([id, column]) => {
+      <DragDropContext
+        onDragEnd={(result) => dispatch({ type: 'SET_LIST', payload: { data: result } })}
+      >
+        {Object.entries(lists).map(([id, value]) => {
           return (
             <Droppable key={id} droppableId={id}>
-              {(provided, snapshot) => {
+              {(provided) => {
                 return (
                   <Card
-                    items={column.items}
                     ref={provided.innerRef}
                     props={provided.droppableProps}
-                    title={column.name}
+                    title={value.name}
                     parentId={id}
                   />
                 );

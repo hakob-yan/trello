@@ -1,16 +1,19 @@
-export const onDragEnd = (result: any, columns: any, dispatch: any) => {
+export const onDragEnd = (result: any, state: any) => {
   if (!result.destination) return;
   const { source, destination } = result;
+  console.log(state, result);
   if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
+    const sourceColumn = state[source.droppableId];
+    console.log(sourceColumn);
+
+    const destColumn = state[destination.droppableId];
     const sourceItems = [...sourceColumn.items];
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
     destItems.splice(destination.index, 0, removed);
 
-    const payload = {
-      ...columns,
+    return {
+      ...state,
       [source.droppableId]: {
         ...sourceColumn,
         items: sourceItems,
@@ -20,19 +23,17 @@ export const onDragEnd = (result: any, columns: any, dispatch: any) => {
         items: destItems,
       },
     };
-    dispatch({ type: 'SET_LIST', payload: { data: payload } });
   } else {
-    const column = columns[source.droppableId];
+    const column = state[source.droppableId];
     const copiedItems = [...column.items];
     const [removed] = copiedItems.splice(source.index, 1);
     copiedItems.splice(destination.index, 0, removed);
-    const payload = {
-      ...columns,
+    return {
+      ...state,
       [source.droppableId]: {
         ...column,
         items: copiedItems,
       },
     };
-    dispatch({ type: 'SET_LIST', payload: { data: payload } });
   }
 };

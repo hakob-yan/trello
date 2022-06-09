@@ -30,7 +30,6 @@ const List = ({ focus, setFocus, feature, index, parentId }: IList) => {
       dispatch({
         type: 'ADD_CARD',
         payload: { name: cardTitle, parentId: parentId },
-        index: index,
       });
       setCardTitle('');
     }
