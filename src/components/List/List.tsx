@@ -8,8 +8,7 @@ interface IList {
   index?: number;
   parentId?: string;
 }
-
-const List = ({ focus, setFocus, feature, index, parentId }: IList) => {
+const List = ({ focus, setFocus, feature, parentId }: IList) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [cardTitle, setCardTitle] = useState('');

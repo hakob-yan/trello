@@ -1,16 +1,9 @@
 export interface IRow {
   id: string;
   content: string;
-  parentId: string;
-  index: number;
 }
 
-export type List = { [key: string]: { name: string } };
-
-export interface IState {
-  cards: Array<IRow>;
-  lists: List;
-}
+export type ListType = { [key: string]: { name: string; items: Array<IRow> } };
 
 export interface IPayload {
   name: string;
@@ -20,5 +13,4 @@ export interface IPayload {
 export interface IAction {
   type: string;
   payload: IPayload;
-  index: number;
 }

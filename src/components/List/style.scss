@@ -3,6 +3,7 @@
 // .first_list
 
 .FirstList {
+    user-select: none;
     display: flex;
     align-items: center;
     background-color: $color-List;
@@ -22,6 +23,7 @@
 }
 
 .OtherList {
+    user-select: none;
     display: flex;
     align-items: center;
     background-color: $color-List;
@@ -51,6 +53,7 @@
 }
 
 .SecondList {
+    user-select: none;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

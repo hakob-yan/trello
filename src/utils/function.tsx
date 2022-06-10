@@ -1,7 +1,7 @@
 export const onDragEnd = (result: any, state: any) => {
   if (!result.destination) return;
   const { source, destination } = result;
-  console.log(state, result);
+  console.log(state);
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = state[source.droppableId];
     console.log(sourceColumn);
