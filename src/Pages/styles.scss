@@ -1,3 +1,5 @@
+@import '/src/constants/Colors.scss';
+
 .App {
     background-image: url('../assets//bg.jpg');
     display: flex;
@@ -13,4 +15,9 @@
 .droppable {
     display: flex;
     width: 100%;
+}
+
+.loka {
+    display: flex;
+
 }

@@ -5,7 +5,8 @@ import './styles.scss';
 import Card from '../components/Card/Card';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import * as Per from '../constants/consts';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,9 +15,8 @@ const App: React.FC = () => {
   const [focus, setFocus] = useState<boolean>(false);
 
   const onDragEnd = (result: any) => {
+    if (result.type === Per.dropList) return;
     if (result.destination) {
-      console.log(result);
-
       dispatch({ type: 'SET_LIST', payload: { data: result } });
     }
   };
@@ -24,22 +24,44 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <DragDropContext onDragEnd={onDragEnd}>
-        {Object.entries(lists).map(([id, value]) => {
-          return (
-            <Droppable key={id} droppableId={id}>
-              {(provided) => {
-                return (
-                  <Card
-                    ref={provided.innerRef}
-                    props={provided.droppableProps}
-                    title={value.name}
-                    parentId={id}
-                  />
-                );
-              }}
-            </Droppable>
-          );
-        })}
+        <Droppable direction="horizontal" type={Per.dropList} droppableId="sdsdsd54aghhgs">
+          {(provided) => {
+            return (
+              <div {...provided.droppableProps} ref={provided.innerRef} className="loka">
+                {Object.entries(lists).map(([id, value], index) => {
+                  return (
+                    <Draggable key={id} draggableId={id} index={index}>
+                      {(provided) => {
+                        return (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="DroppableDiv"
+                            key={id}
+                          >
+                            <Droppable type={Per.dropCard} droppableId={id}>
+                              {(provided) => {
+                                return (
+                                  <Card
+                                    ref={provided.innerRef}
+                                    props={provided.droppableProps}
+                                    title={value.name}
+                                    parentId={id}
+                                  />
+                                );
+                              }}
+                            </Droppable>
+                          </div>
+                        );
+                      }}
+                    </Draggable>
+                  );
+                })}
+              </div>
+            );
+          }}
+        </Droppable>
       </DragDropContext>
       <List feature="Add a List" setFocus={setFocus} focus={focus} />
     </div>
