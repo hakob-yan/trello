@@ -15,9 +15,14 @@ const App: React.FC = () => {
   const [focus, setFocus] = useState<boolean>(false);
 
   const onDragEnd = (result: any) => {
-    if (result.type === Per.dropList) return;
-    if (result.destination) {
+    if (result.type === Per.dropList) {
+      console.log(result);
       dispatch({ type: 'SET_LIST', payload: { data: result } });
+
+      return;
+    }
+    if (result.destination) {
+      dispatch({ type: 'SET_CARD', payload: { data: result } });
     }
   };
 

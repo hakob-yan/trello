@@ -34,11 +34,28 @@ export const listReducer = (
         },
       };
     }
-    case 'SET_LIST': {
+    case 'SET_CARD': {
       const newState = { ...state };
       return onDragEnd(payload.data, newState);
     }
+    case 'SET_LIST': {
+      const source = payload.data.source.index;
+      const dest = payload.data.destination.index;
+      const newState = { ...state };
+      const arrState = Object.entries(newState);
 
+      switch (source <= dest) {
+        case true:
+          arrState.splice(dest + 1, 0, arrState[source]);
+          arrState.splice(source, 1);
+          break;
+        case false:
+          const removed = arrState.splice(source, 1);
+          arrState.splice(dest, 0, removed[0]);
+          break;
+      }
+      return Object.fromEntries(arrState);
+    }
     default:
       return state;
   }
