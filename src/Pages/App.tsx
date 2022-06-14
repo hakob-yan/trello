@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { IData, ListType } from '../interface';
+import { ListType } from '../interface';
 import List from '../components/List/List';
 import './styles.scss';
 import Card from '../components/Card/Card';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import * as Per from '../constants/consts';
 
 const App: React.FC = () => {
@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const lists = useSelector((state: ListType) => state);
   const [focus, setFocus] = useState<boolean>(false);
 
-  const onDragEnd = (result: IData) => {
+  const onDragEnd = (result: DropResult) => {
     if (result.type === Per.dropList) {
       dispatch({ type: 'SET_LIST', payload: { data: result } });
 
@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <DragDropContext onDragEnd={() => onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable direction="horizontal" type={Per.dropList} droppableId="sdsdsd54aghhgs">
           {(provided) => {
             return (
