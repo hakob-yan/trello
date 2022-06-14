@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ListType } from '../interface';
+import { IData, ListType } from '../interface';
 import List from '../components/List/List';
 import './styles.scss';
 import Card from '../components/Card/Card';
@@ -14,9 +14,8 @@ const App: React.FC = () => {
   const lists = useSelector((state: ListType) => state);
   const [focus, setFocus] = useState<boolean>(false);
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: IData) => {
     if (result.type === Per.dropList) {
-      console.log(result);
       dispatch({ type: 'SET_LIST', payload: { data: result } });
 
       return;
@@ -28,7 +27,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={() => onDragEnd}>
         <Droppable direction="horizontal" type={Per.dropList} droppableId="sdsdsd54aghhgs">
           {(provided) => {
             return (

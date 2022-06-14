@@ -1,5 +1,7 @@
 import * as Per from '../constants/consts';
-export const onDragEnd = (result: any, state: any) => {
+import { IData } from '../interface';
+import { ListType } from '../interface';
+export const onDragEnd = (result: IData, state: ListType) => {
   if (!result.destination) return;
   if (result.type === Per.dropList) return;
   const { source, destination } = result;

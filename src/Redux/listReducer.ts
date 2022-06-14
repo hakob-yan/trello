@@ -36,7 +36,8 @@ export const listReducer = (
     }
     case 'SET_CARD': {
       const newState = { ...state };
-      return onDragEnd(payload.data, newState);
+      const dragState = onDragEnd(payload.data, newState);
+      return dragState ? dragState : newState;
     }
     case 'SET_LIST': {
       const source = payload.data.source.index;
@@ -54,6 +55,7 @@ export const listReducer = (
           arrState.splice(dest, 0, removed[0]);
           break;
       }
+
       return Object.fromEntries(arrState);
     }
     default:
