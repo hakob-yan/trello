@@ -1,6 +1,6 @@
-@import '/src/constants/Colors.scss';
+@import '../styles/Colors.scss';
 
-.App {
+.app {
     background-image: url('../assets//bg.jpg');
     display: flex;
     align-items: flex-start;
@@ -19,5 +19,4 @@
 
 .loka {
     display: flex;
-
 }

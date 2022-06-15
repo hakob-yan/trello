@@ -1,16 +1,14 @@
-@import '../../constants/Colors.scss';
+@import 'src/styles/Colors.scss';
 
-.Card {
+.card {
     width: 300px;
-
     border-radius: 5px;
     background-color: $color-SecondList;
     padding: 5px;
     margin: 0px 10px 10px 10px;
-
 }
 
-.TitleInput {
+.titleInput {
     user-select: none;
     font-weight: bold;
     margin-bottom: 5px;
@@ -30,7 +28,7 @@
     }
 }
 
-.CardInput {
+.cardInput {
     user-select: none;
     padding-left: 10px;
     border-radius: 5px;

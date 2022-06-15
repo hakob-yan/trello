@@ -6,29 +6,29 @@ import Card from '../components/Card/Card';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import * as Per from '../constants/consts';
+import { DropList, DropCard, MainId, AddList } from '../constants';
+import { setCard, setList } from '../Redux/actions';
 
-const App: React.FC = () => {
+const App = () => {
   const dispatch = useDispatch();
 
   const lists = useSelector((state: ListType) => state);
   const [focus, setFocus] = useState<boolean>(false);
 
   const onDragEnd = (result: DropResult) => {
-    if (result.type === Per.dropList) {
-      dispatch({ type: 'SET_LIST', payload: { data: result } });
-
+    if (result.type === DropList) {
+      dispatch(setList(result));
       return;
     }
     if (result.destination) {
-      dispatch({ type: 'SET_CARD', payload: { data: result } });
+      dispatch(setCard(result));
     }
   };
 
   return (
-    <div className="App">
+    <div className="app">
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable direction="horizontal" type={Per.dropList} droppableId="sdsdsd54aghhgs">
+        <Droppable direction="horizontal" type={DropList} droppableId={MainId}>
           {(provided) => {
             return (
               <div {...provided.droppableProps} ref={provided.innerRef} className="loka">
@@ -38,13 +38,12 @@ const App: React.FC = () => {
                       {(provided) => {
                         return (
                           <div
+                            key={id}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className="DroppableDiv"
-                            key={id}
                           >
-                            <Droppable type={Per.dropCard} droppableId={id}>
+                            <Droppable type={DropCard} droppableId={id}>
                               {(provided) => {
                                 return (
                                   <Card
@@ -67,7 +66,7 @@ const App: React.FC = () => {
           }}
         </Droppable>
       </DragDropContext>
-      <List feature="Add a List" setFocus={setFocus} focus={focus} />
+      <List feature={AddList} setFocus={setFocus} focus={focus} />
     </div>
   );
 };

@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { addCard, addList } from '../../Redux/actions';
+import { AddCard, AddList } from '../../constants/global';
+
 import './style.scss';
-interface IList {
-  focus: Boolean;
-  setFocus: Function;
-  feature: string;
-  index?: number;
-  parentId?: string;
-}
-const List = ({ focus, setFocus, feature, parentId }: IList) => {
+import { IList } from './types';
+
+const List: React.FC<IList> = ({ focus, setFocus, feature, parentId }) => {
   const dispatch = useDispatch();
+
   const [title, setTitle] = useState('');
   const [cardTitle, setCardTitle] = useState('');
 
+  // create a custom useBooleanState that will return [state, setTrue, setFalse, toggle]
   const handleOpen = () => {
     setFocus(true);
   };
@@ -22,60 +23,53 @@ const List = ({ focus, setFocus, feature, parentId }: IList) => {
   };
 
   const handleInput = () => {
-    if (feature === 'Add a List' && title !== '') {
-      dispatch({ type: 'ADD_LIST', payload: { name: title } });
+    if (feature === AddList && title !== '') {
+      dispatch(addList(title));
       setTitle('');
-    } else if (feature === 'Add a card' && cardTitle !== '') {
-      dispatch({
-        type: 'ADD_CARD',
-        payload: { name: cardTitle, parentId: parentId },
-      });
+    } else if (feature === AddCard && cardTitle !== '') {
+      dispatch(addCard(cardTitle, parentId));
       setCardTitle('');
     }
     setFocus(false);
   };
 
-  const handleChange = (e: any) => {
-    if (feature === 'Add a List') {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (feature === AddList) {
       setTitle(e.target.value);
-    } else if (feature === 'Add a card') {
+    } else if (feature === AddCard) {
       setCardTitle(e.target.value);
     }
   };
 
-  if (!focus) {
-    return (
-      <div onClick={handleOpen} className={feature == 'Add a List' ? 'FirstList' : 'OtherList'}>
-        <span className="Plus">+</span>
-        <span className="ListText">{feature}</span>
-      </div>
-    );
-  }
-  return (
-    <div
-      tabIndex={0}
-      onBlur={(e) => {
-        const list = e.relatedTarget?.className;
-        if (list === 'AddButton' || list === 'SecondList' || list === 'ListInput') {
-          return false;
-        }
-        handleClose();
-      }}
-      className="SecondList"
-    >
+  const handleBlur: React.FocusEventHandler<HTMLDivElement> = (e) => {
+    const list = e.relatedTarget?.className;
+    if (list === 'addButton' || list === 'secondList' || list === 'listInput') {
+      return false;
+    }
+    handleClose();
+  };
+
+  return focus ? (
+    <div tabIndex={0} onBlur={handleBlur} className="secondList">
       <input
         autoFocus
-        value={feature === 'Add a List' ? title : cardTitle}
-        spellCheck={false}
-        className="ListInput"
+        value={feature === AddList ? title : cardTitle}
+        className="listInput"
         type="text"
         placeholder="Enter title.."
         onChange={handleChange}
       />
       <div>
-        <input onClick={handleInput} className="AddButton" type="button" value={feature} />
-        <span onBlur={handleClose} onClick={handleClose} tabIndex={3} className="Close" />
+        <input onClick={handleInput} className="addButton" type="button" value={feature} />
+        <span onBlur={handleClose} onClick={handleClose} tabIndex={3} className="close">
+          X
+        </span>
       </div>
+    </div>
+  ) : (
+    <div onClick={handleOpen} className={feature == AddList ? 'firstList' : 'otherList'}>
+      <span className="plus">+</span>
+      <span className="listText">{feature}</span>
     </div>
   );
 };

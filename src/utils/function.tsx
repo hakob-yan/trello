@@ -1,11 +1,10 @@
-import * as Per from '../constants/consts';
-import { IData } from '../interface';
-import { ListType } from '../interface';
+import { IData, ListType } from '../interface';
+import { DropList } from '../constants';
+
 export const onDragEnd = (result: IData, state: ListType) => {
   if (!result.destination) return;
-  if (result.type === Per.dropList) return;
+  if (result.type === DropList) return;
   const { source, destination } = result;
-
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = state[source.droppableId];
     const destColumn = state[destination.droppableId];
@@ -26,7 +25,7 @@ export const onDragEnd = (result: IData, state: ListType) => {
       },
     };
   } else {
-    if (result.type === Per.dropList) return;
+    if (result.type === DropList) return;
     const column = state[source.droppableId];
     const copiedItems = [...column.items];
     const [removed] = copiedItems.splice(source.index, 1);

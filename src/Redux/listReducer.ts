@@ -1,6 +1,7 @@
+import { onDragEnd } from '../utils/function';
 import { v4 as uuid } from 'uuid';
 import { IAction, ListType } from '../interface';
-import { onDragEnd } from '../utils/function';
+import { SET_CARD, ADD_CARD, SET_LIST, ADD_LIST } from './types';
 
 const columnsFromBackend: ListType = {};
 
@@ -9,7 +10,7 @@ export const listReducer = (
   { payload, type }: IAction
 ): ListType => {
   switch (type) {
-    case 'ADD_LIST': {
+    case ADD_LIST: {
       return {
         ...state,
         [uuid()]: {
@@ -19,7 +20,7 @@ export const listReducer = (
       };
     }
 
-    case 'ADD_CARD': {
+    case ADD_CARD: {
       const newItem = {
         id: uuid(),
         content: payload.name,
@@ -34,12 +35,12 @@ export const listReducer = (
         },
       };
     }
-    case 'SET_CARD': {
+    case SET_CARD: {
       const newState = { ...state };
       const dragState = onDragEnd(payload.data, newState);
       return dragState ? dragState : newState;
     }
-    case 'SET_LIST': {
+    case SET_LIST: {
       const source = payload.data.source.index;
       const dest = payload.data.destination.index;
       const newState = { ...state };
@@ -62,24 +63,3 @@ export const listReducer = (
       return state;
   }
 };
-
-// export const cardReducer = (state: Array<IRow> = [], { type, payload }: IAction): Array<IRow> => {
-//   switch (type) {
-//     case 'ADD_CARD':
-//       const newState = [...state];
-//       newState.push({
-//         id: uuid(),
-//         parentId: payload.parentId,
-//         index: newState.length + 1,
-//         content: payload.name,
-//       });
-//       return newState;
-//     case 'SET_LIST': {
-//       const newState = { ...state };
-
-//       return onDragEnd(payload.data, newState);
-//     }
-//     default:
-//       return state;
-//   }
-// };
