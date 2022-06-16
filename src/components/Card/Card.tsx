@@ -1,7 +1,7 @@
 import React, { useMemo, ForwardedRef, useState } from 'react';
 import { IRow, ListType } from '../../interface';
 import './style.scss';
-import List from '../List/List';
+import List from '../createList/CreateList';
 import { Draggable } from 'react-beautiful-dnd';
 import { useSelector } from 'react-redux';
 import { AddCard } from '../../constants';
@@ -24,7 +24,7 @@ const Card = React.forwardRef(
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className="cardInput"
+                    className="card_input"
                     style={provided.draggableProps.style}
                   >
                     {item.content}
@@ -39,7 +39,7 @@ const Card = React.forwardRef(
 
     return (
       <div {...props} ref={ref} className="card">
-        <div className="titleInput">{title}</div>
+        <div className="title_input">{title}</div>
         {cardDraggables}
         <List parentId={parentId} feature={AddCard} setFocus={setFocus} focus={focus} />
       </div>
