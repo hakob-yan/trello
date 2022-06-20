@@ -15,6 +15,7 @@ export interface IPayload {
   parentId: string;
   data: IData;
 }
+
 export interface IAction {
   type: string;
   payload: IPayload;

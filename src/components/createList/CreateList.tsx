@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addCard, addList } from '../../Redux/actions';
+import { addCard, addList } from '../../redux/actions';
 import { AddCard, AddList } from '../../constants/global';
 
 import './style.scss';
@@ -13,7 +13,6 @@ const List: React.FC<IList> = ({ focus, setFocus, feature, parentId }) => {
   const [title, setTitle] = useState('');
   const [cardTitle, setCardTitle] = useState('');
 
-  // create a custom useBooleanState that will return [state, setTrue, setFalse, toggle]
   const handleOpen = () => {
     setFocus(true);
   };

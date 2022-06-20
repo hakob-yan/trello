@@ -1,17 +1,20 @@
 import React, { useMemo, ForwardedRef, useState } from 'react';
-import { IRow, ListType } from '../../interface';
-import './style.scss';
-import List from '../createList/CreateList';
-import { Draggable } from 'react-beautiful-dnd';
 import { useSelector } from 'react-redux';
+import { Draggable } from 'react-beautiful-dnd';
+
+import { IRow } from '../../interface';
+import List from '../CreateList/CreateList';
 import { AddCard } from '../../constants';
+import * as listSelectors from '../../redux/selectors';
+
+import './style.scss';
 import { ICard } from './types';
 
 const Card = React.forwardRef(
   ({ title, props, parentId }: ICard, ref: ForwardedRef<HTMLDivElement> | undefined) => {
     const [focus, setFocus] = useState<Boolean>(false);
 
-    const cards = useSelector((state: ListType) => state[parentId].items);
+    const cards = useSelector(listSelectors.selectCards(parentId));
 
     const cardDraggables = useMemo(
       () =>

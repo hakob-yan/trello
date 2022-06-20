@@ -1,5 +1,5 @@
 import { DropResult } from 'react-beautiful-dnd';
-import { SET_CARD, ADD_CARD, SET_LIST, ADD_LIST } from './types';
+import { SET_CARD, ADD_CARD, SET_LIST, ADD_LIST } from './actionTypes';
 
 export const setList = (result: DropResult) => {
   return { type: SET_LIST, payload: { data: result } };

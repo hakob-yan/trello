@@ -1,14 +1,9 @@
 import { onDragEnd } from '../utils/function';
 import { v4 as uuid } from 'uuid';
 import { IAction, ListType } from '../interface';
-import { SET_CARD, ADD_CARD, SET_LIST, ADD_LIST } from './types';
+import { SET_CARD, ADD_CARD, SET_LIST, ADD_LIST } from './actionTypes';
 
-const columnsFromBackend: ListType = {};
-
-export const listReducer = (
-  state: ListType = columnsFromBackend,
-  { payload, type }: IAction
-): ListType => {
+export const listReducer = (state: ListType = {}, { payload, type }: IAction): ListType => {
   switch (type) {
     case ADD_LIST: {
       return {
@@ -35,11 +30,13 @@ export const listReducer = (
         },
       };
     }
+
     case SET_CARD: {
       const newState = { ...state };
       const dragState = onDragEnd(payload.data, newState);
       return dragState ? dragState : newState;
     }
+
     case SET_LIST: {
       const source = payload.data.source.index;
       const dest = payload.data.destination.index;
@@ -59,7 +56,9 @@ export const listReducer = (
 
       return Object.fromEntries(arrState);
     }
-    default:
+
+    default: {
       return state;
+    }
   }
 };
